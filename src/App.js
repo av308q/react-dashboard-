@@ -1,5 +1,5 @@
 // Import react libraries 
-import React from 'react';
+import React, {Component} from 'react';
 
 // Import components
 import CardList from './cardList';
@@ -9,19 +9,34 @@ import CardList from './cardList';
 import './App.css';
 // import CardList from './cardList';
 
-const dummyUser = {
-  username: {
-    first: 'Angel',
-    last: 'Valdivia'
+class App extends Component {
+  state = {
+    userData: []
   }
-};
 
-function App() {
-  return (
-    <div className="App">
-      <CardList userData={dummyUser} />
+  async componentDidMount() {
+    const response = await fetch('https://randomuser.me/api/?results=2');
+    const data = await response.json();
+    console.log('data is', data);
+
+  
+
+this.setState({
+  userData: data.results
+ })
+}
+
+
+
+  render() {
+  const { userData } = this.state;
+    return (
+      <div className ='App'>
+        <CardList userData={userData} />
     </div>
   );
+ } 
 }
 
 export default App;
+
